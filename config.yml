@@ -1,0 +1,24 @@
+check_every_seconds_default: 5
+log_level: DEBUG
+
+kafka_connect:
+  uri: 'kafka-1b5de807-kost-8b9f.aivencloud.com:12887'
+  topic: 'wesite-monitor'
+  cafile: ca.pem
+  certfile: service.cert
+  keyfile: service.key
+
+websites:
+  - url: https://www.google.com
+    check_every_seconds: 10
+    patterns:
+      - '.*OK.*'
+
+  - url: https://www.amazon.com
+
+  - url: https://www.aiven.com
+    patterns:
+      - '.*OK.*'
+
+target:
+  postgres_uri: 'postgres://avnadmin:vb3vymj1qlbk8rw6@pg-2aa26d62-kost-8b9f.aivencloud.com:12885/defaultdb?sslmode=require'
