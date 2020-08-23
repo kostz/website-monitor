@@ -48,7 +48,7 @@ class Checker:
             'website': self.websiteUrl,
             'http_status_code': r.status_code,
             'elapsed': r.elapsed.microseconds,
-            'patternsMatched': patterns_matched
+            'pattern_match': patterns_matched
         }
 
         self.logger.debug(msg)

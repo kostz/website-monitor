@@ -6,8 +6,8 @@ from psycopg2.extras import RealDictCursor
 def createDatabaseObjectsSafe(cursor):
     cursor.execute(
         open(
-            os.path.join(os.getcwd(), 'sql', 'create_database.sql', 'r')
-        )
+            os.path.join(os.getcwd(), 'sql', 'create_database.sql'), 'r'
+        ).read()
     )
     return True
 
@@ -20,11 +20,12 @@ def getPostgresDBCursor(postgres_uri):
 def initDictionaries(db_cursor, websites):
     websites_ids = dict()
     for w in websites:
-        db_cursor.execute('select id from website where url={}'.format(w))
+        w = w['url']
+        db_cursor.execute("select id from website where url='{}'".format(w))
         res = db_cursor.fetchone()
         if res is None:
             db_cursor.execute("insert into website(url) values ('{}');".format(w))
-            db_cursor.execute('select id from website where url={}'.format(w))
+            db_cursor.execute("select id from website where url='{}'".format(w))
             res = db_cursor.fetchone()
         websites_ids[w] = res
     return websites_ids

@@ -32,7 +32,7 @@ def getKafkaProducer(**kwargs):
 
 
 def getKafkaConsumer(**kwargs):
-    kafka_connect = kwargs.get('kafkaConnect')
+    kafka_connect = kwargs.get('kafka_connect')
     _checkKafkaConnect(kafka_connect)
 
     consumer = KafkaConsumer(
