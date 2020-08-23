@@ -11,8 +11,8 @@ class Writer:
             message = message.value
             self.logger.info('message received {}'.format(message))
             self.db_cursor.execute(
-                'insert into website_mon(time, website_id, elapsed, http_status_code, pattern_match)'
-                '  values({},{},{},{},{})'.format(
+                "insert into website_mon(time, website_id, elapsed, http_status_code, pattern_match)"
+                "  values('{}',{},{},{},{})".format(
                     message['time'],
                     self.websites_ids[message['website']],
                     message['elapsed'],

@@ -28,8 +28,8 @@ if __name__ == '__main__':
 
     # init database
     db = getPostgresDBCursor(config['target']['postgres_uri'])
-    createDatabaseObjectsSafe(db)
-    websites_ids = initDictionaries(db, config['websites'])
+    createDatabaseObjectsSafe(db, logger)
+    websites_ids = initDictionaries(db, config['websites'], logger)
 
     threads = []
     thread_id = 0
