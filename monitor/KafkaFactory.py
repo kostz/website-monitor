@@ -1,4 +1,5 @@
 import json
+import os
 from kafka import KafkaProducer, KafkaConsumer
 
 
@@ -22,9 +23,9 @@ def getKafkaProducer(**kwargs):
     producer = KafkaProducer(
         bootstrap_servers=kafka_connect['uri'],
         security_protocol="SSL",
-        ssl_cafile=kafka_connect['cafile'],
-        ssl_certfile=kafka_connect['certfile'],
-        ssl_keyfile=kafka_connect['keyfile']
+        ssl_cafile=os.path.join(os.getcwd(), kafka_connect['cafile']),
+        ssl_certfile=os.path.join(os.getcwd(), kafka_connect['certfile']),
+        ssl_keyfile=os.path.join(os.getcwd(), kafka_connect['keyfile'])
     )
 
     return producer
@@ -40,9 +41,9 @@ def getKafkaConsumer(**kwargs):
         value_deserializer=lambda m: json.loads(m.decode('utf-8')),
         bootstrap_servers=kafka_connect['uri'],
         security_protocol="SSL",
-        ssl_cafile=kafka_connect['cafile'],
-        ssl_certfile=kafka_connect['certfile'],
-        ssl_keyfile=kafka_connect['keyfile']
+        ssl_cafile=os.path.join(os.getcwd(), kafka_connect['cafile']),
+        ssl_certfile=os.path.join(os.getcwd(), kafka_connect['certfile']),
+        ssl_keyfile=os.path.join(os.getcwd(), kafka_connect['keyfile'])
     )
 
     return consumer

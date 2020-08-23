@@ -28,14 +28,14 @@ class Checker:
         else:
             self.sleepTime = kwargs.get('default_interval')
 
-        if 'patterns' in self.websiteConfig['patterns']:
+        if 'patterns' in self.websiteConfig:
             for p in self.websiteConfig['patterns']:
                 self.patterns.append(
                     re.compile(p, re.IGNORECASE)
                 )
 
     def process(self):
-        now = datetime.now()
+        now = str(datetime.now())
         r = requests.get(self.websiteUrl)
 
         patterns_matched = True
@@ -47,7 +47,7 @@ class Checker:
             'time': now,
             'website': self.websiteUrl,
             'http_status_code': r.status_code,
-            'elapsed': r.elapsed,
+            'elapsed': r.elapsed.microseconds,
             'patternsMatched': patterns_matched
         }
 

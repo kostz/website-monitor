@@ -1,2 +1,5 @@
 /venv/
 *.pyc
+/ca.pem
+/service.cert
+/service.key
