@@ -15,7 +15,8 @@ def createDatabaseObjectsSafe(cursor, logger):
 
 def getPostgresDBCursor(postgres_uri):
     db = psycopg2.connect(postgres_uri)
-    return db.cursor(cursor_factory=RealDictCursor)
+    db.set_session(autocommit=True)
+    return db.cursor()
 
 
 def initDictionaries(db_cursor, websites, logger):

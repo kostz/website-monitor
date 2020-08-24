@@ -11,13 +11,14 @@ kafka_connect:
 websites:
   - url: https://www.google.com
     patterns:
-      - '.*OK.*'
+      - '.*Google.*'
 
   - url: https://www.amazon.com
 
-  - url: https://www.aiven.com
+  - url: https://aiven.io
     patterns:
-      - '.*OK.*'
+      - '.*Get Started.*'
+      - '.*Performant data pipelines in minutes.*'
 
 target:
   postgres_uri: 'postgres://avnadmin:vb3vymj1qlbk8rw6@pg-2aa26d62-kost-8b9f.aivencloud.com:12885/defaultdb?sslmode=require'
