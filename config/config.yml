@@ -4,9 +4,9 @@ log_level: DEBUG
 kafka_connect:
   uri: 'kafka-1b5de807-kost-8b9f.aivencloud.com:12887'
   topic: 'website-monitor'
-  cafile: ca.pem
-  certfile: service.cert
-  keyfile: service.key
+  cafile: config/ca.pem
+  certfile: config/service.cert
+  keyfile: config/service.key
 
 websites:
   - url: https://www.google.com
