@@ -40,7 +40,8 @@ def getKafkaConsumer(**kwargs):
         auto_offset_reset='earliest',
         value_deserializer=lambda m: json.loads(m.decode('utf-8')),
         bootstrap_servers=kafka_connect['uri'],
-        security_protocol="SSL",
+        security_protocol='SSL',
+        group_id='database-writer',
         ssl_cafile=os.path.join(os.getcwd(), kafka_connect['cafile']),
         ssl_certfile=os.path.join(os.getcwd(), kafka_connect['certfile']),
         ssl_keyfile=os.path.join(os.getcwd(), kafka_connect['keyfile'])

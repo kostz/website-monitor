@@ -1,4 +1,4 @@
-check_every_seconds_default: 5
+check_every_seconds_default: 1
 log_level: DEBUG
 
 kafka_connect:
@@ -13,7 +13,7 @@ websites:
     patterns:
       - '.*Google.*'
 
-  - url: https://www.amazon.com
+#  - url: https://www.amazon.ae
 
   - url: https://aiven.io
     patterns:

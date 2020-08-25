@@ -32,5 +32,5 @@ def initDictionaries(db_cursor, websites, logger):
             db_cursor.execute("insert into website(url) values ('{}')".format(w))
             db_cursor.execute("select id from website where url='{}'".format(w))
             res = db_cursor.fetchone()
-        websites_ids[w] = res
+        websites_ids[w] = res[0]
     return websites_ids

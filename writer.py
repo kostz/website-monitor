@@ -1,7 +1,6 @@
 import argparse
 import logging
 import threading
-
 import yaml
 
 from monitor.KafkaFactory import getKafkaConsumer

@@ -27,22 +27,24 @@ class Checker:
             self.sleepTime = self.websiteConfig['check_every_seconds']
         else:
             self.sleepTime = kwargs.get('default_interval')
-
+        self.logger.info('sleep time {}'.format(self.sleepTime))
         if 'patterns' in self.websiteConfig:
             for p in self.websiteConfig['patterns']:
-                self.patterns.append(
-                    re.compile(p, re.IGNORECASE)
-                )
+                self.patterns.append(p)
 
     def process(self):
+        self.logger.debug('--- processing start')
         now = str(datetime.now())
         r = requests.get(self.websiteUrl)
-
-        patterns_matched = True
-        for p in self.patterns:
-            if not p.match(r.text):
-                patterns_matched = False
-
+        self.logger.debug('get request done: {}'.format(r.status_code))
+        if len(self.patterns) == 0:
+            patterns_matched = None
+        else:
+            patterns_matched = True
+            for p in self.patterns:
+                if len(re.findall(p, r.text)) == 0:
+                    patterns_matched = False
+        self.logger.debug('pattern match: {}'.format(patterns_matched))
         msg = {
             'time': now,
             'website': self.websiteUrl,
@@ -51,11 +53,14 @@ class Checker:
             'pattern_match': patterns_matched
         }
 
-        self.logger.debug(msg)
+        self.logger.info('sending message {}'.format(msg))
         self.producer.send(
             self.topic,
             json.dumps(msg).encode('utf-8')
         )
+        self.logger.debug('message sent')
+        self.logger.debug('--- processing end')
 
     def wait(self):
+        self.logger.debug('sleep for {}'.format(self.sleepTime))
         time.sleep(self.sleepTime)
