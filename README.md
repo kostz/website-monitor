@@ -15,6 +15,7 @@ kafka_connect:
   keyfile: config/service.key
 websites:
   - url: https://www.website.com
+    check_every_seconds: 5
     patterns:
       - '.*text.*'
 target:
@@ -31,6 +32,7 @@ kafka_connect.topic | Apache Kafka topic, will be created automatically if absen
 kafka_connect.{cafile/ certfile/ keyfile} | credentials |
 websites |list of monitored websites|
 websites.url |URL of a website|
+websites.check_every_seconds | optional polling interval |
 websites.patterns | optional list of regexp patterns to verify website contents |
 target | backend PostgreSQL database connection
 target.postgres_uri | PostgreSQL database URI |
