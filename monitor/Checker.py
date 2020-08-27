@@ -1,23 +1,23 @@
 import json
 import time
-from datetime import datetime
-from logging import Logger
+import logging
 
 import requests
+from datetime import datetime
+
 import re
 
 
 class Checker:
     websiteUrl = ''
     producer = None
-    logger: Logger
     patterns = []
 
     def __init__(self, **kwargs):
         self.websiteConfig = kwargs.get('website')
         self.producer = kwargs.get('kafka_producer')
         self.topic = kwargs.get('kafka_topic')
-        self.logger = kwargs.get('logger')
+        self.logger = logging.getLogger('checker')
 
         self.logger.debug(self.websiteConfig)
 
@@ -32,9 +32,13 @@ class Checker:
             for p in self.websiteConfig['patterns']:
                 self.patterns.append(p)
 
+    def getTimestamp(self):
+        return str(datetime.now())
+
     def process(self):
         self.logger.debug('--- processing start')
-        now = str(datetime.now())
+        now = self.getTimestamp()
+
         r = requests.get(self.websiteUrl)
         self.logger.debug('get request done: {}'.format(r.status_code))
         if len(self.patterns) == 0:
@@ -53,6 +57,7 @@ class Checker:
             'pattern_match': patterns_matched
         }
 
+        #print(msg)
         self.logger.info('sending message {}'.format(msg))
         self.producer.send(
             self.topic,
