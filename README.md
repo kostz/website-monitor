@@ -29,7 +29,7 @@ log_level | log level | INFO/DEBUG
 kafka_connect | Apache Kafka connection parameters | 
 kafka_connect.uri | Apache Kafka endpoint URI|
 kafka_connect.topic | Apache Kafka topic, will be created automatically if absent|
-kafka_connect.{cafile/ certfile/ keyfile} | credentials |
+kafka_connect.{cafile/ certfile/ keyfile} | Apache Kafka credentials |
 websites |list of monitored websites|
 websites.url |URL of a website|
 websites.check_every_seconds | optional polling interval |
