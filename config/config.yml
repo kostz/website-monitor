@@ -2,7 +2,7 @@ check_every_seconds_default: 1
 log_level: DEBUG
 
 kafka_connect:
-  uri: 'kafka-1b5de807-kost-8b9f.aivencloud.com:12887'
+  uri: ''
   topic: 'website-monitor'
   cafile: config/ca.pem
   certfile: config/service.cert
@@ -22,4 +22,4 @@ websites:
       - '.*Performant data pipelines in minutes.*'
 
 target:
-  postgres_uri: 'postgres://avnadmin:ux70c3aou1wg2gha@pg-28ef757d-kost-8b9f.aivencloud.com:12885/defaultdb?sslmode=require'
+  postgres_uri: ''
