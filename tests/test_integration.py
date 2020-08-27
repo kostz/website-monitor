@@ -19,8 +19,8 @@ def safe_drop(db_cursor, stmt):
 @pytest.fixture
 def cleanup_database():
     db_cursor = getPostgresDBCursorByFile('test-config/config.yml')
-    #safe_drop(db_cursor, 'drop table website_mon')
-    #safe_drop(db_cursor, 'drop table website')
+    safe_drop(db_cursor, 'drop table website_mon')
+    safe_drop(db_cursor, 'drop table website')
 
 
 @pytest.fixture
@@ -38,7 +38,7 @@ def start_processes(cleanup_database):
     monitoring.start()
     writer.start()
 
-    ## wait until database tables are created
+    ## dirty wait until both sides is running and initialized
     sleep(10)
 
     yield
@@ -51,7 +51,8 @@ def fetch_records(c, stmt):
     c.execute(stmt)
     return c.fetchall()
 
-#@pytest.mark.skip(reason="for now")
+@pytest.fixture
+@pytest.mark.skip(reason="its a bad idea to expose credentials to the public repo")
 def test_integration(start_processes):
     db_cursor = getPostgresDBCursorByFile('tests/test-config/config.yml')
     cnt = 0
