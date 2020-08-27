@@ -22,20 +22,20 @@ target:
   postgres_uri: ''
 ```
 
-parameter | details | possible values
---- | --- | ---
-check_every_seconds_default | default polling interval applied for all websites | 
-log_level | log level | INFO/DEBUG
-kafka_connect | Apache Kafka connection parameters | 
-kafka_connect.uri | Apache Kafka endpoint URI|
-kafka_connect.topic | Apache Kafka topic, will be created automatically if absent|
-kafka_connect.{cafile/ certfile/ keyfile} | Apache Kafka credential files location |
-websites |list of monitored websites|
-websites.url |URL of a website|
-websites.check_every_seconds | optional polling interval |
-websites.patterns | optional list of regexp patterns to verify website contents |
+parameter | details 
+--- | --- 
+check_every_seconds_default | default polling interval applied for all websites 
+log_level | log level, INFO/DEBUG
+kafka_connect | Apache Kafka connection parameters 
+kafka_connect.uri | Apache Kafka endpoint URI
+kafka_connect.topic | Apache Kafka topic, will be created automatically if absent
+kafka_connect.{cafile/ certfile/ keyfile} | Apache Kafka credential files location 
+websites |list of monitored websites
+websites.url |URL of a website
+websites.check_every_seconds | optional polling interval 
+websites.patterns | optional list of regexp patterns to verify website contents 
 target | backend PostgreSQL database connection
-target.postgres_uri | PostgreSQL database URI |
+target.postgres_uri | PostgreSQL database URI 
 
 
 
