@@ -23,7 +23,7 @@ class Writer:
                     self.websites_ids[message['website']],
                     message['elapsed'],
                     message['http_status_code'],
-                    'null' if message['pattern_match'] is None else message['pattern_match'],
+                    message['pattern_match'],
                 )
             )
 
