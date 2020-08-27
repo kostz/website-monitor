@@ -17,7 +17,7 @@ def processItem(thread_id, writer: Writer, logger: logging):
 
 if __name__ == '__main__':
     a = argparse.ArgumentParser(description='website monitoring writer unit')
-    a.add_argument('--config', help='config file name', default='config.yml')
+    a.add_argument('--config', help='config file name', default='config/config.yml')
     args = a.parse_args()
 
     with open(args.config, 'r') as f:
@@ -45,8 +45,7 @@ if __name__ == '__main__':
                     db_cursor=getPostgresDBCursor(
                         config['target']['postgres_uri']
                     ),
-                    websites_ids=websites_ids.copy(),
-                    logger=logger
+                    websites_ids=websites_ids.copy()
                 ),
                 logger
             )

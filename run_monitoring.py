@@ -17,7 +17,7 @@ def processItem(c: Checker, l: logging):
 
 if __name__ == '__main__':
     a = argparse.ArgumentParser(description='website checker unit')
-    a.add_argument('--config', help='config file name', default='config.yml')
+    a.add_argument('--config', help='config file name', default='config/config.yml')
     args = a.parse_args()
 
     with open(args.config, 'r') as f:
@@ -37,7 +37,6 @@ if __name__ == '__main__':
                         kafka_connect=config['kafka_connect']
                     ),
                     kafka_topic=config['kafka_connect']['topic'],
-                    logger=logger,
                     default_interval=config['check_every_seconds_default']
                 ),
                 logger

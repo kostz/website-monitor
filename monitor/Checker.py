@@ -39,25 +39,33 @@ class Checker:
         self.logger.debug('--- processing start')
         now = self.getTimestamp()
 
-        r = requests.get(self.websiteUrl)
-        self.logger.debug('get request done: {}'.format(r.status_code))
-        if len(self.patterns) == 0:
-            patterns_matched = None
-        else:
-            patterns_matched = True
-            for p in self.patterns:
-                if len(re.findall(p, r.text)) == 0:
-                    patterns_matched = False
-        self.logger.debug('pattern match: {}'.format(patterns_matched))
-        msg = {
-            'time': now,
-            'website': self.websiteUrl,
-            'http_status_code': r.status_code,
-            'elapsed': r.elapsed.microseconds,
-            'pattern_match': patterns_matched
-        }
+        try:
+            r = requests.get(self.websiteUrl)
+            self.logger.debug('get request done: {}'.format(r.status_code))
+            if len(self.patterns) == 0:
+                patterns_matched = None
+            else:
+                patterns_matched = True
+                for p in self.patterns:
+                    if len(re.findall(p, r.text)) == 0:
+                        patterns_matched = False
+            self.logger.debug('pattern match: {}'.format(patterns_matched))
+            msg = {
+                'time': now,
+                'website': self.websiteUrl,
+                'http_status_code': r.status_code,
+                'elapsed': r.elapsed.microseconds,
+                'pattern_match': patterns_matched
+            }
+        except Exception:
+            msg = {
+                'time': now,
+                'website': self.websiteUrl,
+                'http_status_code': 999,
+                'elapsed': 0,
+                'pattern_match': None
+            }
 
-        #print(msg)
         self.logger.info('sending message {}'.format(msg))
         self.producer.send(
             self.topic,
