@@ -34,7 +34,9 @@ def test_basic():
     w.process()
 
     assert "insert into website_mon(request_time, website_id, elapsed, http_status_code, pattern_match)" \
-           "  values('2020-08-27 12:01:01',1,123,200,null)" == db_cursor_mock.execute.call_args[0][0]
+           "  values(%s,%s,%s,%s,%s)" == db_cursor_mock.execute.call_args[0][0]
+
+    assert ('2020-08-27 12:01:01',1,123,200,'null') == db_cursor_mock.execute.call_args[0][1]
 
 
 def test_pattern_not_matched():
@@ -63,4 +65,6 @@ def test_pattern_not_matched():
     w.process()
 
     assert "insert into website_mon(request_time, website_id, elapsed, http_status_code, pattern_match)" \
-           "  values('2020-08-27 12:01:01',1,123,200,False)" == db_cursor_mock.execute.call_args[0][0]
+           "  values(%s,%s,%s,%s,%s)" == db_cursor_mock.execute.call_args[0][0]
+
+    assert ('2020-08-27 12:01:01', 1, 123, 200, False) == db_cursor_mock.execute.call_args[0][1]
