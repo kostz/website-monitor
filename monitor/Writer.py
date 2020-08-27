@@ -7,7 +7,9 @@ class Writer:
         self.db_cursor = kwargs.get('db_cursor')
         self.websites_ids = kwargs.get('websites_ids')
         self.consumer = kwargs.get('kafka_consumer')
-        self.logger = logging.getLogger('writer')
+        self.logger = logging.getLogger('monitor.writer')
+
+        self.logger.debug(self.websites_ids)
 
     def process(self):
         for message in self.consumer:

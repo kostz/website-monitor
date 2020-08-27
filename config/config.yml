@@ -13,9 +13,9 @@ websites:
     patterns:
       - '.*Google.*'
 
-#  - url: https://www.amazon.ae
-
   - url: https://aiven.io
+
+  - url: https://badsite.aa
     patterns:
       - '.*Get Started.*'
       - '.*Performant data pipelines in minutes.*'

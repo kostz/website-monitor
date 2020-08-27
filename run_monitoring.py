@@ -23,7 +23,7 @@ if __name__ == '__main__':
     with open(args.config, 'r') as f:
         config = yaml.load(f, Loader=yaml.SafeLoader)
 
-    logger = initLogger('checker', level=config['log_level'])
+    logger = initLogger('monitor', level=config['log_level'])
 
     threads = []
     for w in config['websites']:

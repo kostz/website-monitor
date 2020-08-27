@@ -17,7 +17,7 @@ class Checker:
         self.websiteConfig = kwargs.get('website')
         self.producer = kwargs.get('kafka_producer')
         self.topic = kwargs.get('kafka_topic')
-        self.logger = logging.getLogger('checker')
+        self.logger = logging.getLogger('monitor.checker')
 
         self.logger.debug(self.websiteConfig)
 

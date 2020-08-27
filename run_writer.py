@@ -23,7 +23,7 @@ if __name__ == '__main__':
     with open(args.config, 'r') as f:
         config = yaml.load(f, Loader=yaml.SafeLoader)
 
-    logger = initLogger('writer', level=config['log_level'])
+    logger = initLogger('monitor', level=config['log_level'])
 
     # init database
     db = getPostgresDBCursor(config['target']['postgres_uri'])

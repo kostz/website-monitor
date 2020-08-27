@@ -6,7 +6,7 @@ from utils import initLogger
 
 
 def setup_module(module):
-    logger = initLogger('checker', level='DEBUG')
+    logger = initLogger('monitor', level='DEBUG')
 
 
 @freeze_time('2020-08-27 12:01:01')
