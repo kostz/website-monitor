@@ -49,3 +49,19 @@ python run_monitoring.py --config=config/config.yml
 ``` python
 python run_writer.py --config=config/config.yml
 ```
+
+## Database schema
+Monitoring data is written to PostgreSQL database containing of two tables automatically created in public schema
+### website
+column | details 
+--- | --- 
+id | internal website id, primary key | 
+url | website url |
+### website_mon
+column | details 
+--- | ---
+request_time | probe time | 
+website_id | website id, foreign key to website table |
+elapsed | time taken for get request |
+http_status_code | http get status code, 999 if request fails |
+pattern_match | result of pattern match, null if no pattern defined for a website |
