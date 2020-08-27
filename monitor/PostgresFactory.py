@@ -13,9 +13,14 @@ def createDatabaseObjectsSafe(cursor, logger):
     return True
 
 
-def getPostgresDBCursor(postgres_uri):
+def getPostgresDB(postgres_uri):
     db = psycopg2.connect(postgres_uri)
     db.set_session(autocommit=True)
+    return db
+
+
+def getPostgresDBCursor(postgres_uri):
+    db = getPostgresDB(postgres_uri)
     return db.cursor()
 
 
@@ -32,12 +37,12 @@ def initDictionaries(db_cursor, websites, logger):
     for w in websites:
         w = w['url']
         logger.debug('processing {}'.format(w))
-        db_cursor.execute("select id from website where url='{}'".format(w))
+        db_cursor.execute("select id from website where url=%s", (w,))
         res = db_cursor.fetchone()
         logger.debug(res)
         if res is None:
-            db_cursor.execute("insert into website(url) values ('{}')".format(w))
-            db_cursor.execute("select id from website where url='{}'".format(w))
+            db_cursor.execute("insert into website(url) values (%s)", (w,))
+            db_cursor.execute("select id from website where url=%s", (w,))
             res = db_cursor.fetchone()
         websites_ids[w] = res[0]
     return websites_ids

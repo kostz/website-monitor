@@ -10,12 +10,10 @@ from monitor.PostgresFactory import getPostgresDBCursorByFile
 
 
 def safe_drop(db_cursor, stmt):
-    db_cursor.execute(stmt)
-
-#    try:
- #       db_cursor.execute(stmt)
-#    except Exception:
-#        pass
+    try:
+        db_cursor.execute(stmt)
+    except Exception:
+        pass
 
 
 @pytest.fixture
@@ -49,28 +47,35 @@ def start_processes(cleanup_database):
     writer.terminate()
 
 
-@pytest.mark.skip(reason="for now")
+def fetch_records(c, stmt):
+    c.execute(stmt)
+    return c.fetchall()
+
+#@pytest.mark.skip(reason="for now")
 def test_integration(start_processes):
     db_cursor = getPostgresDBCursorByFile('tests/test-config/config.yml')
-
     cnt = 0
-    while cnt < 10 and db_cursor.execute("select id from website where url='https://www.google.com'").fetchone() is not None:
+
+    while cnt < 10 and len(fetch_records(db_cursor, "select id from website where url='https://www.google.com'")) == 0:
         cnt += 1
         sleep(2)
 
     if cnt == 10:
         raise RuntimeError('website record was not found')
 
-    website_id = db_cursor.execute("select id from website where url='https://www.google.com'").fetchone()[0]
+    website_id = fetch_records(db_cursor, "select id from website where url='https://www.google.com'")[0][0]
 
     cnt = 0
-    while cnt < 10 and db_cursor.execute("select * from website_mon where website_id={}".format(website_id)).fetchone() is not None:
+    while cnt < 10 and len(fetch_records(db_cursor, "select * from website_mon where website_id={}".format(website_id))) == 0:
         cnt += 1
         sleep(2)
 
     if cnt == 10:
         raise RuntimeError('website_mon record was not found')
 
-    mon_id = db_cursor.execute("select min(id) from website_mon where website_id={}".format(website_id)).fetchone()
+    assert len(fetch_records(db_cursor, "select * from website_mon where website_id={}".format(website_id))) > 0
 
-    assert db_cursor.execute("select * from website_mon where id={}".format(mon_id)).fetchone() == 1
+  #  request_time = fetch_records(db_cursor, "select min(request_time) from website_mon where website_id={}".format(website_id))
+
+
+#    assert fetch_records(db_cursor, "select * from website_mon where request_time={}".format(request_time))[0] == 1

@@ -17,12 +17,13 @@ class Writer:
             self.logger.info('message received {}'.format(message))
             self.db_cursor.execute(
                 "insert into website_mon(request_time, website_id, elapsed, http_status_code, pattern_match)"
-                "  values('{}',{},{},{},{})".format(
+                "  values(%s,%s,%s,%s,%s)",
+                (
                     message['time'],
                     self.websites_ids[message['website']],
                     message['elapsed'],
                     message['http_status_code'],
-                    'null' if message['pattern_match'] is None else message['pattern_match']
+                    'null' if message['pattern_match'] is None else message['pattern_match'],
                 )
             )
 
