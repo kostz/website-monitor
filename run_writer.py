@@ -15,12 +15,8 @@ def processItem(thread_id, writer: Writer, logger: logging):
         writer.process()
 
 
-if __name__ == '__main__':
-    a = argparse.ArgumentParser(description='website monitoring writer unit')
-    a.add_argument('--config', help='config file name', default='config/config.yml')
-    args = a.parse_args()
-
-    with open(args.config, 'r') as f:
+def runWriter(config_file_location):
+    with open(config_file_location, 'r') as f:
         config = yaml.load(f, Loader=yaml.SafeLoader)
 
     logger = initLogger('monitor', level=config['log_level'])
@@ -53,3 +49,10 @@ if __name__ == '__main__':
         threads.append(x)
         x.start()
         thread_id += 1
+
+
+if __name__ == '__main__':
+    a = argparse.ArgumentParser(description='website monitoring writer unit')
+    a.add_argument('--config', help='config file name', default='config/config.yml')
+    args = a.parse_args()
+    runWriter(args.config)

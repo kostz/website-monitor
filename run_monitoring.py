@@ -15,12 +15,8 @@ def processItem(c: Checker, l: logging):
         c.wait()
 
 
-if __name__ == '__main__':
-    a = argparse.ArgumentParser(description='website checker unit')
-    a.add_argument('--config', help='config file name', default='config/config.yml')
-    args = a.parse_args()
-
-    with open(args.config, 'r') as f:
+def runMonitoring(config_file_location):
+    with open(config_file_location, 'r') as f:
         config = yaml.load(f, Loader=yaml.SafeLoader)
 
     logger = initLogger('monitor', level=config['log_level'])
@@ -44,3 +40,10 @@ if __name__ == '__main__':
         )
         threads.append(x)
         x.start()
+
+
+if __name__ == '__main__':
+    a = argparse.ArgumentParser(description='website checker unit')
+    a.add_argument('--config', help='config file name', default='config/config.yml')
+    args = a.parse_args()
+    runMonitoring(args.config)

@@ -1,6 +1,6 @@
 import os
 import psycopg2
-from psycopg2.extras import RealDictCursor
+import yaml
 
 
 def createDatabaseObjectsSafe(cursor, logger):
@@ -17,6 +17,13 @@ def getPostgresDBCursor(postgres_uri):
     db = psycopg2.connect(postgres_uri)
     db.set_session(autocommit=True)
     return db.cursor()
+
+
+def getPostgresDBCursorByFile(config_file_location):
+    with open(config_file_location, 'r') as f:
+        config = yaml.load(f, Loader=yaml.SafeLoader)
+
+    return getPostgresDBCursor(config['target']['postgres_uri'])
 
 
 def initDictionaries(db_cursor, websites, logger):
