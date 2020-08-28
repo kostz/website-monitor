@@ -52,7 +52,6 @@ def fetch_records(c, stmt):
     return c.fetchall()
 
 @pytest.fixture
-@pytest.mark.skip(reason="its a bad idea to expose credentials to the public repo")
 def test_integration(start_processes):
     db_cursor = getPostgresDBCursorByFile('tests/test-config/config.yml')
     cnt = 0
@@ -75,8 +74,3 @@ def test_integration(start_processes):
         raise RuntimeError('website_mon record was not found')
 
     assert len(fetch_records(db_cursor, "select * from website_mon where website_id={}".format(website_id))) > 0
-
-  #  request_time = fetch_records(db_cursor, "select min(request_time) from website_mon where website_id={}".format(website_id))
-
-
-#    assert fetch_records(db_cursor, "select * from website_mon where request_time={}".format(request_time))[0] == 1
