@@ -31,6 +31,8 @@ class Checker:
         if 'patterns' in self.websiteConfig:
             for p in self.websiteConfig['patterns']:
                 self.patterns.append(p)
+        else:
+            self.patterns = []
 
     def getTimestamp(self):
         return str(datetime.now())
@@ -42,6 +44,8 @@ class Checker:
         try:
             r = requests.get(self.websiteUrl)
             self.logger.debug('get request done: {}'.format(r.status_code))
+            self.logger.debug('patterns {}'.format(self.patterns))
+            self.logger.debug('config {}'.format(self.websiteConfig))
             if len(self.patterns) == 0:
                 patterns_matched = None
             else:
