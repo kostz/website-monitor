@@ -51,7 +51,8 @@ def fetch_records(c, stmt):
     c.execute(stmt)
     return c.fetchall()
 
-@pytest.fixture
+
+@pytest.mark.skip(reason="its a bad idea to expose credentials to the public repo, and test is not stable because of NoBrokerException from Kafka side")
 def test_integration(start_processes):
     db_cursor = getPostgresDBCursorByFile('tests/test-config/config.yml')
     cnt = 0
@@ -66,7 +67,8 @@ def test_integration(start_processes):
     website_id = fetch_records(db_cursor, "select id from website where url='https://www.google.com'")[0][0]
 
     cnt = 0
-    while cnt < 10 and len(fetch_records(db_cursor, "select * from website_mon where website_id={}".format(website_id))) == 0:
+    while cnt < 10 and len(
+            fetch_records(db_cursor, "select * from website_mon where website_id={}".format(website_id))) == 0:
         cnt += 1
         sleep(2)
 
