@@ -10,7 +10,7 @@ kafka_connect:
 
 websites:
   - url: https://www.google.com
-    check_every_second: 5
+    check_every_seconds: 5
     patterns:
       - '.*Google.*'
 
